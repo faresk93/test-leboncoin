@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fares\TestLeboncoin\Controller;
 
+use Fares\TestLeboncoin\DTO\LeBonCoinData;
 use Fares\TestLeboncoin\Http\JsonResponse;
 use Fares\TestLeboncoin\Http\Request;
 use Fares\TestLeboncoin\Service\LeBonCoinService;
@@ -20,14 +21,17 @@ final class LeBonCoinController
      */
     public function index(Request $request): JsonResponse
     {
-        $int1 = (int)$request->pathParams['int1'] ?? null;
-        $int2 = (int)$request->pathParams['int2'] ?? null;
-        $limit = (int)$request->pathParams['limit'] ?? null;
-        $str1 = $request->pathParams['str1'] ?? null;
-        $str2 = $request->pathParams['str2'] ?? null;
-
-        $result = $this->leBonCoinService->fizz($int1, $int2, $limit, $str1, $str2);
+        $data = LeBonCoinData::fromArray($request->pathParams);
+        $result = $this->leBonCoinService->list($data);
+        // record (for stats)
+        $this->leBonCoinService->recordHit($data);
 
         return new JsonResponse($result);
+    }
+
+    public function stats(Request $request): JsonResponse
+    {
+        $stats = $this->leBonCoinService->stats();
+        return new JsonResponse($stats);
     }
 }

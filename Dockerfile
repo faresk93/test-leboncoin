@@ -2,7 +2,11 @@ FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y unzip git && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y $PHPIZE_DEPS \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get purge -y --auto-remove $PHPIZE_DEPS \
+    && rm -rf /var/lib/apt/lists/*
 
 # Point document root at public/ and enable .htaccess rewrites
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' \

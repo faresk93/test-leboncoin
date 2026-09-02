@@ -3,10 +3,23 @@ services:
     build: .
     ports:
       - "8080:80"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
     volumes:
       - .:/var/www/html
       - /var/www/html/vendor
       - leboncoin-data:/var/www/html/var
     restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
 volumes:
   leboncoin-data:
+  redis-data:

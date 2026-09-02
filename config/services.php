@@ -8,7 +8,10 @@ use Fares\TestLeboncoin\Service\LeBonCoinService;
 use Fares\TestLeboncoin\Utils\ErrorHandler;
 
 return static function (Container $c): void {
-    $c->set(LeBonCoinService::class, static fn (Container $c) => new LeBonCoinService());
+    // service
+    $c->set(LeBonCoinService::class, static fn (Container $c) => new LeBonCoinService(new Redis()));
+
+    // controller
     $c->set(LeBonCoinController::class, static fn (Container $c) => new LeBonCoinController(
         $c->get(LeBonCoinService::class),
     ));
