@@ -1,0 +1,22 @@
+{
+    "name": "fares/test-leboncoin",
+    "description": "leboncoin test",
+    "require": {
+        "symfony/var-dumper": "^7.4",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "ext-pdo_sqlite": "*",
+        "vlucas/phpdotenv": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fares\\TestLeboncoin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fares KHIARY",
+            "email": "khiary.fares@gmail.com"
+        }
+    ]
+}

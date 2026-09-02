@@ -1,0 +1,12 @@
+services:
+  leboncoin:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor
+      - leboncoin-data:/var/www/html/var
+    restart: unless-stopped
+volumes:
+  leboncoin-data:

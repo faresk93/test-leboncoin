@@ -1,0 +1,7 @@
+.git
+.gitignore
+var/*.sqlite
+var/*.sqlite-*
+vendor/
+.phpunit.cache/
+README.md
